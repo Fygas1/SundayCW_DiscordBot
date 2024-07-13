@@ -12,10 +12,10 @@ class misc_cmds(commands.Cog):
     async def on_ready(self):
         print("Misc commands cog loaded.")
 
-    # Sync
+    # Sync slash commands
     @commands.command()
     async def sync(self,ctx) -> None:
-        fmt=await ctx.bot.tree.sync()
+        fmt=await ctx.bot.tree.sync(guild=ctx.guild)
         await ctx.send(f'Synced {len(fmt)} commands.')
         return
 
@@ -24,11 +24,11 @@ class misc_cmds(commands.Cog):
     async def ping(self, interaction: discord.Interaction):
         await interaction.response.send_message(f'Pong! {round(self.bot.latency * 1000)} ms')
 
-    @app_commands.command(name="helpp", description="Get help information")
-    async def helpp(self, interaction: discord.Interaction):
+    @app_commands.command(name="help", description="Get help information")
+    async def help(self, interaction: discord.Interaction):
         embed = discord.Embed(title="Help", description="This is a help message with some text.", color=discord.Color.blue())
         embed.set_thumbnail(url=self.bot.user.avatar.url)
         await interaction.response.send_message(embed=embed)
 
 async def setup(bot):
-    await bot.add_cog(misc_cmds(bot))
+    await bot.add_cog(misc_cmds(bot),guilds=[discord.Object(id='1198196659797114941'),discord.Object(id='994251915208691793')])
